@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#F26355</color>
+    <color name="colorPrimaryDark">#eeeeee</color>
+    <color name="colorAccent">#F06459</color>
+    <color name="color_background">#F5F5F9</color>
+    <color name="red">#F74C31</color>
+    <color name="red_translucent">#7fF74C31</color>
+    <color name="red_pressed">#dddddd</color>
+    <color name="blue">#42a2ff</color>
+    <color name="blue_0d">#0D42a2ff</color>
+    <color name="blue_translucent">#7f42a2ff</color>
+    <color name="blue_pressed">#a0cee3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_translucent">#7fFFFFFF</color>
+    <color name="default_color_0">#000000</color>
+    <color name="default_color_0_translucent">#7f000000</color>
+    <color name="default_color_0_4d">#4D000000</color>
+    <color name="default_color_3">#333333</color>
+    <color name="default_color_6">#666666</color>
+    <color name="default_color_9">#999999</color>
+    <color name="default_color_8">#888888</color>
+    <color name="default_color_9_translucent">#7f999999</color>
+    <color name="default_color_3_translucent">#7f333333</color>
+    <color name="default_color_a">#AAAAAA</color>
+    <color name="default_color_a_translucent">#7fAAAAAA</color>
+    <color name="default_color_d">#DDDDDD</color>
+    <color name="default_color_d_translucent">#7fDDDDDD</color>
+    <color name="default_color_e">#EEEEEE</color>
+    <color name="default_color_e_translucent">#7fEEEEEE</color>
+    <color name="default_color_f5">#F5F5F5</color>
+    <color name="disable_blue">#BDDCFF</color>
+    <!--白底 按钮 文字不变色-->
+    <color name="white_pressed">#dddddd</color>
+    <color name="black">#000000</color>
+    <!--不可用时，文字、背景、边缘都是该颜色-->
+    <color name="disable_color">#dddddd</color>
+    <!--可用时，文字、背景、边缘都是该颜色-->
+    <color name="enable_color">#333333</color>
+    <color name="camera_bg">#7f000000</color>
+    <color name="lucency">#00ffffff</color>
+    <color name="divide_line">#DDDDDD</color>
+    <color name="item_bg">#FAF8F6</color>
+    <color name="yellow">#FFD925</color>
+    <color name="gray">#F7F7F7</color>
+    <color name="default_color_fa">#FAFAFA</color>
+    <color name="deep_gray">#D8D8D8</color>
+    <color name="deep1_gray">#D6D8F4</color>
+    <color name="hook_greee">#14B963</color>
+    <color name="ijk_transparent_dark">#77000000</color>
+
+    <color name="color_FFD925">#FFD925</color>
+    <color name="color_1AFFD925">#1AFFD925</color>
+
+    <color name="color_909DAA">#909DAA</color>
+    <color name="color_1A909DAA">#1A909DAA</color>
+
+    <color name="color_33909DAA">#33909DAA</color>
+
+    <color name="color_1AF26355">#1AF26355</color>
+    <color name="color_414141">#414141</color>
+    <color name="c_333333">#333333</color>
+    <color name="c_dddddd">#dddddd</color>
+    <color name="c_42a2ff">#42a2ff</color>
+    <color name="c_E3CF57">#4169E1</color>
+    <color name="c_55a5fe">#55a5fe</color>
+    <color name="c_fe5f7b">#fe5f7b</color>
+    <color name="c_f3be56">#f3be56</color>
+    <color name="c_52b57a">#52b57a</color>
+    <color name="c_cccc52">#cccc52</color>
+    <color name="c_484C4B">#484C4B</color>
+    <color name="c_cccccc">#CCCCCC</color>
+    <color name="c_55555">#555555</color>
+    <color name="c_55555_translucent">#7f555555</color>
+    <color name="c_f26355">#f26355</color>
+    <color name="c_f26355_pressed">#7fF26355</color>
+    <color name="orange">#FF8018</color>
+    <color name="orange_shadow">#1AFF8018</color>
+    <color name="orange_pressed">#e07117</color>
+    <color name="status_bar">#303135</color>
+    <color name="theme_body">#cc22292c</color>
+
+    <color name="gray61">#9C9C9C</color>
+    <color name="gray71">#B5B5B5</color>
+    <color name="gray81">#CFCFCF</color>
+    <color name="c_20f26355">#20F26355</color>
+    <color name="c_f7f8f9">#f7f8f9</color>
+</resources>
