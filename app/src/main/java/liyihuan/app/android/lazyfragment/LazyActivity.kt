@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_lazy.*
 import liyihuan.app.android.lazyfragment.fragment.*
-import liyihuan.app.android.lazyfragment.lazyfragment.LazyHomeFragment
+import liyihuan.app.android.lazyfragment.lazyfragment.*
 import java.util.*
 
 class LazyActivity : AppCompatActivity(), View.OnClickListener {
@@ -21,10 +21,10 @@ class LazyActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initView() {
         val homeFragment = LazyHomeFragment()
-        val twoFragment = TwoFragment()
-        val threeFragment = ThreeFragment()
-        val fourFragment = FourFragment()
-        val mineFragment = MineFragment()
+        val twoFragment = LazyTwoFragment()
+        val threeFragment = LazyThreeFragment()
+        val fourFragment = LazyFourFragment()
+        val mineFragment = LazyMineFragment()
         val fragmentsList = ArrayList<Fragment>()
         fragmentsList.add(homeFragment)
         fragmentsList.add(twoFragment)

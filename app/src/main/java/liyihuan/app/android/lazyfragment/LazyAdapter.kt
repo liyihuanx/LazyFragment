@@ -9,9 +9,8 @@ import com.chad.library.adapter.base.BaseViewHolder
  * @Author: liyihuan
  * @Date: 2021/6/8 22:47
  */
-class LazyAdapter : BaseQuickAdapter<LazyBean,BaseViewHolder>(R.layout.item_lazy){
-    override fun convert(helper: BaseViewHolder, item: LazyBean?) {
-
+class LazyAdapter : BaseQuickAdapter<LazyBean, BaseViewHolder>(R.layout.item_lazy) {
+    override fun convert(helper: BaseViewHolder, item: LazyBean) {
+        helper.setText(R.id.tvLazyItem, item.textContent)
     }
-
 }

@@ -63,7 +63,6 @@ public class SmartRecyclerView extends FrameLayout {
 
     private void init() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_refresh_recyclerview, this, false);
-
         recyclerView = view.findViewById(R.id.recyclerView);
         flRecyContent = view.findViewById(R.id.flRecyContent);
         smartRefreshLayout = view.findViewById(R.id.refreshLayout);
@@ -98,28 +97,18 @@ public class SmartRecyclerView extends FrameLayout {
     }
 
     /**
-     * 告诉view获取失败
+     * 手动停止刷新
      */
-    public void onFetchDataError() {
-        smartRefreshHelper.onFetchDataError();
+    public void pauseRefresh(){
+        smartRefreshHelper.pauseRefresh();
     }
 
-    /**
-     * 请求成功　smartRefreshHelper处理页数记录空视图的显示
-     *
-     * @param goneIfNoData 已经到底了一直显示
-     */
-    public void onFetchDataFinish(List data, Boolean goneIfNoData) {
-        smartRefreshHelper.onFetchDataFinish(data, goneIfNoData);
-    }
 
     /**
-     * 请求成功　smartRefreshHelper处理页数记录空视图的显示
-     *
-     * @param sureLoadMoreEnd 服务器给了结束判断
+     * 将请求结果交给smartRefreshHelper处理
      */
-    public void onFetchDataFinish(List data, Boolean goneIfNoData, boolean sureLoadMoreEnd) {
-        smartRefreshHelper.onFetchDataFinish(data, goneIfNoData, sureLoadMoreEnd);
+    public void onFetchDataFinish(List data) {
+        smartRefreshHelper.onFetchDataFinish(data);
     }
 
 
@@ -128,21 +117,15 @@ public class SmartRecyclerView extends FrameLayout {
      *
      * @param emptyView     空视图
      * @param adapter       适配器
-     * @param preLoadNumber 静默加载滑到倒数第几个开始
      * @param fetcherFuc    刷新事件页回调　0开始
      */
-    public void setUp(BaseQuickAdapter adapter, IEmptyView emptyView
-            , int preLoadNumber, Boolean loadmoreNeed, Boolean refreshNeed
-
-            , Function1<Integer, Unit> fetcherFuc
-    ) {
+    public void setUp(BaseQuickAdapter adapter, IEmptyView emptyView, Boolean loadMoreNeed, Boolean isRefreshNeed, Function1<Integer, Unit> fetcherFuc) {
         if (emptyView != null) {
             flRecyContent.addView(emptyView.getContentView(), 0);
         }
 
         recyclerView.setAdapter(adapter);
-        smartRefreshHelper = new SmartRefreshHelper(adapter, recyclerView, smartRefreshLayout, emptyView, preLoadNumber, loadmoreNeed, refreshNeed, fetcherFuc);
-
+        smartRefreshHelper = new SmartRefreshHelper(adapter, recyclerView, smartRefreshLayout, emptyView, loadMoreNeed, isRefreshNeed, fetcherFuc);
     }
 
 }

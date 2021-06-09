@@ -15,101 +15,71 @@ import liyihuan.app.android.lazyfragment.refresh.IEmptyView.Companion.NODATA
  * @Date: 2021/6/8 21:27
  */
 open class SmartRefreshHelper<T>(
-    val adapter: BaseQuickAdapter<T, *>,
+    private val adapter: BaseQuickAdapter<T, *>,
     private val recycler_view: RecyclerView,
     private val refresh_layout: SmartRefreshLayout,
     private val emptyCustomView: IEmptyView?,
-    /**
-     * 静默加载数量
-     */
-    private val preLoadNumber: Int,
-    /**
-     * 是否需要加载更多
-     */
+
     private val isNeedLoadMore: Boolean = true,
-    private val refreshNeed: Boolean = true,
+    private val isNeedRefresh: Boolean = true,
     /**
      * 刷新回调
      */
     private val fetcherFuc: (page: Int) -> Unit
 ) {
 
+    /**
+     * 1.无网络，无缓存 --> 加载空视图
+     * 2.无网络，有缓存 --> 加载缓存
+     * 3.有网络，无缓存 --> 请求接口
+     * 4.有网络，有缓存 --> 根据情况返回接口数据或是缓存
+     */
+
     private var isLoadMoreing: Boolean = false
     private var isRefreshing: Boolean = false
     private var currentPage = 0
 
-    private var eachPageSize: Int = 0
-
 
     init {
-        adapter.setEnableLoadMore(isNeedLoadMore)
-        if (isNeedLoadMore) {
-            adapter.setPreLoadNumber(preLoadNumber)
-            val simpleLoadMoreView = SimpleLoadMoreView()
-            adapter.setLoadMoreView(simpleLoadMoreView)
-            simpleLoadMoreView.setLoadMoreEndGone(true)
-            adapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
-        }
-        refresh_layout.setEnableLoadMore(false)
-        if (refreshNeed) {
+        if (isNeedRefresh) {
             refresh_layout.setOnRefreshListener {
                 refresh()
             }
         }
-    }
 
-
-    /**
-     * 获取到分页数据 设置下拉刷新和上拉的状态
-     */
-    fun onFetchDataFinish(data: List<T>?) {
-        onFetchDataFinish(data, true)
-    }
-
-
-    fun onFetchDataFinish(
-        data: List<T>?,
-        goneIfNoData: Boolean,
-        sureLoadMoreEnd: Boolean? = null
-    ) {
-
-        refresh_layout.finishRefresh(true)
-        if (data != null) {
-            if (currentPage == 0 && isRefreshing) {
-                eachPageSize = data.size
-            }
-
-            if (isLoadMoreing) {
-                currentPage++
-                adapter.addData(data)
-
-            } else {
-                adapter.setNewData(data)
-
-            }
-
-            if (sureLoadMoreEnd != null) {
-                if (sureLoadMoreEnd) {
-                    adapter.loadMoreEnd(goneIfNoData)
-                } else {
-                    adapter.loadMoreComplete()
-                }
-            } else {
-                if (data.size < eachPageSize) {
-                    adapter.loadMoreEnd(goneIfNoData)
-                } else {
-                    adapter.loadMoreComplete()
-                }
+        if (isNeedLoadMore) {
+            refresh_layout.setOnLoadMoreListener {
+                loadMore()
             }
         }
-        refreshEmptyView(NODATA)
-        isLoadMoreing = false
-        isRefreshing = false
     }
 
-    fun onFetchDataFinish(data: List<T>?, goneIfNoData: Boolean) {
-        onFetchDataFinish(data, goneIfNoData, null)
+    fun onFetchDataFinish(data: List<T>?) {
+        if (data != null) {
+            // 如果在加载中
+            if (isLoadMoreing) {
+                // 页数加一
+                currentPage++
+                adapter.addData(data)
+                refresh_layout.finishLoadMore(true)
 
+            } else if (isRefreshing) {
+                adapter.setNewData(data)
+                refresh_layout.finishRefresh(1000)
+            }
+
+        } else {
+            // 如果没有数据
+            if (currentPage == 0) {
+                refresh_layout.finishRefresh(false)
+                // 设置空状态
+                refreshEmptyView(NODATA)
+            } else {
+                refresh_layout.finishLoadMore(false)
+            }
+        }
+        isLoadMoreing = false
+        isRefreshing = false
     }
 
 
@@ -132,6 +102,9 @@ open class SmartRefreshHelper<T>(
         isRefreshing = false
     }
 
+    /**
+     * 刷新空视图状态
+     */
     private fun refreshEmptyView(type: Int) {
 
         if (adapter.data.isEmpty() && recycler_view.childCount == 0) {
@@ -141,28 +114,49 @@ open class SmartRefreshHelper<T>(
         }
     }
 
+    /**
+     * 加载数据
+     */
     private fun loadMore() {
         if (isRefreshing || isLoadMoreing) {
-            if (isLoadMoreing) {
-                isLoadMoreing = false
-            }
             return
         }
         isLoadMoreing = true
         fetcherFuc(currentPage + 1)
     }
 
-
+    /**
+     * 刷新数据
+     */
     fun refresh() {
+        // 如果在刷新 或者 在加载
         if (isRefreshing || isLoadMoreing) {
-            if (isRefreshing) {
-                isRefreshing = false
-            }
-            refresh_layout.finishRefresh(true)
             return
         }
+        // 判断缓存
+//        val hasCache = true
+//        if (hasCache){
+//            // 加载缓存数据
+//        }
+
+        // 判断网络
+        val connectedStatus = NetUtil.isNetworkAvailable(recycler_view.context)
+        if (!connectedStatus) {
+            refreshEmptyView(NETWORK_ERROR)
+            return
+        }
+        refresh_layout.autoRefresh()
+        // 没有跳出方法，这符合条件可以刷新
         isRefreshing = true
+        // 当前页数重置
         currentPage = 0
+        // 请求接口请求第一页
         fetcherFuc(0)
+    }
+
+    fun pauseRefresh() {
+        if (isRefreshing) {
+            refresh_layout.finishRefresh()
+        }
     }
 }

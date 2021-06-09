@@ -28,17 +28,22 @@ abstract class LazyFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootview = inflater.inflate(getLayoutId(), null)
 
-        initView(rootview!!)
+//        initView(rootview!!)
         isViewCreated = true
-
-        // isHidden 如果该Fragment对象已经被隐藏，那么它返回true
-        if (!isHidden && userVisibleHint) {
-            dispatchVisible(true)
-        }
 
         return rootview
 
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // isHidden 如果该Fragment对象已经被隐藏，那么它返回true
+        initView()
+        if (!isHidden && userVisibleHint) {
+            dispatchVisible(true)
+        }
+    }
+
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -131,11 +136,13 @@ abstract class LazyFragment : Fragment() {
     /**
      * 加载数据
      * 停止加载数据
+     * 第一次加载数据
      */
-    open fun onFragmentResume() {}
+    abstract fun onFragmentResume()
     open fun onFragmentPause() {}
+    open fun onFragmentFirstVisible(){}
 
     abstract fun getLayoutId(): Int
-    abstract fun initView(rootView: View)
-    protected abstract fun onFragmentFirstVisible()
+//    abstract fun initView(rootView: View)
+    abstract fun initView()
 }

@@ -27,6 +27,8 @@ class LazyHomeFragment : LazyRecyclerFragment<LazyBean>() {
         return R.layout.fragment_lazy_home
     }
 
+
+
     override fun onFragmentFirstVisible() {
     }
 
@@ -40,11 +42,28 @@ class LazyHomeFragment : LazyRecyclerFragment<LazyBean>() {
     }
 
     override val layoutManager: RecyclerView.LayoutManager by lazy {
-        GridLayoutManager(context, 2)
+        GridLayoutManager(context, 1)
     }
 
     override val fetcherFuc: (page: Int) -> Unit = {
-        Log.d("QWER", "fetcherFuc")
+        loadData()
     }
 
+    private val list by lazy {
+        arrayListOf(LazyBean("1"), LazyBean("2"), LazyBean("3"))
+    }
+
+    private fun loadData() {
+        mSmartRecycler.onFetchDataFinish(list)
+    }
+
+    override fun onFragmentPause() {
+        super.onFragmentPause()
+        Log.d("QWER", "LazyHomeFragment: 停止加载")
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        Log.d("QWER", "LazyHomeFragment: 加载数据")
+    }
 }
