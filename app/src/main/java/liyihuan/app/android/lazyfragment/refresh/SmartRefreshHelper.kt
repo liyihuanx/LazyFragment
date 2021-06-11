@@ -1,9 +1,11 @@
 package liyihuan.app.android.lazyfragment.refresh
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.loadmore.SimpleLoadMoreView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import liyihuan.app.android.lazyfragment.LazyBean
 import liyihuan.app.android.lazyfragment.refresh.IEmptyView.Companion.HIDE_LAYOUT
 import liyihuan.app.android.lazyfragment.refresh.IEmptyView.Companion.NETWORK_ERROR
 import liyihuan.app.android.lazyfragment.refresh.IEmptyView.Companion.NODATA
@@ -37,13 +39,16 @@ open class SmartRefreshHelper<T>(
 
     private var isLoadMoreing: Boolean = false
     private var isRefreshing: Boolean = false
-    private var currentPage = 0
+    var currentPage = 0
 
+    private var hasCache: Boolean = false
+
+    private var cacheData = ArrayList<T>()
 
     init {
         if (isNeedRefresh) {
             refresh_layout.setOnRefreshListener {
-                refresh()
+                refresh(false)
             }
         }
 
@@ -55,7 +60,7 @@ open class SmartRefreshHelper<T>(
     }
 
     fun onFetchDataFinish(data: List<T>?) {
-        if (data != null) {
+        if (data != null && data.isNotEmpty()) {
             // 如果在加载中
             if (isLoadMoreing) {
                 // 页数加一
@@ -65,7 +70,13 @@ open class SmartRefreshHelper<T>(
 
             } else if (isRefreshing) {
                 adapter.setNewData(data)
-                refresh_layout.finishRefresh(1000)
+                /** 假装有缓存数据 **/
+                cacheData.clear()
+                cacheData.addAll(data)
+                hasCache = true
+                /** 假装有缓存数据 **/
+
+                refresh_layout.finishRefresh()
             }
 
         } else {
@@ -106,7 +117,6 @@ open class SmartRefreshHelper<T>(
      * 刷新空视图状态
      */
     private fun refreshEmptyView(type: Int) {
-
         if (adapter.data.isEmpty() && recycler_view.childCount == 0) {
             emptyCustomView?.setErrorType(type)
         } else {
@@ -128,16 +138,17 @@ open class SmartRefreshHelper<T>(
     /**
      * 刷新数据
      */
-    fun refresh() {
+    fun refresh(isNeedCache: Boolean = true) {
         // 如果在刷新 或者 在加载
         if (isRefreshing || isLoadMoreing) {
             return
         }
         // 判断缓存
-//        val hasCache = true
-//        if (hasCache){
-//            // 加载缓存数据
-//        }
+        if (hasCache && isNeedCache) {
+            // 加载缓存数据
+            loadCacheData()
+            return
+        }
 
         // 判断网络
         val connectedStatus = NetUtil.isNetworkAvailable(recycler_view.context)
@@ -152,6 +163,10 @@ open class SmartRefreshHelper<T>(
         currentPage = 0
         // 请求接口请求第一页
         fetcherFuc(0)
+    }
+
+    private fun loadCacheData() {
+        Log.d("QWER", "loadCacheData: ")
     }
 
     fun pauseRefresh() {

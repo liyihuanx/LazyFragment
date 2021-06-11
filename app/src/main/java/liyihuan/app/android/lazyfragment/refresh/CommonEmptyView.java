@@ -51,8 +51,7 @@ public class CommonEmptyView extends FrameLayout implements View.OnClickListener
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_custom_empty, this);
         setVisibility(GONE);
-
-        setBackgroundColor(-1);
+//        setBackgroundColor(-1);
         setOnClickListener(this);
         img = findViewById(R.id.img);
         emptyText = findViewById(R.id.empty_text);
@@ -116,7 +115,6 @@ public class CommonEmptyView extends FrameLayout implements View.OnClickListener
     @Override
     public void setErrorType(int i) {
         setVisibility(View.VISIBLE);
-
         switch (i) {
             case NETWORK_ERROR:
                 setVisibility(View.VISIBLE);
@@ -129,7 +127,7 @@ public class CommonEmptyView extends FrameLayout implements View.OnClickListener
             case NODATA:
                 setVisibility(View.VISIBLE);
                 mErrorState = NODATA;
-               // img.setImageResource(R.drawable.pic_empty);
+                img.setImageResource(R.drawable.pic_empty);
                 img.setVisibility(View.VISIBLE);
                 refreshEmptyView();
                 clickEnable = true;

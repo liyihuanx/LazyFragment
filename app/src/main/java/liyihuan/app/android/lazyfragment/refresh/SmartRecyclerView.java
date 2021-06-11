@@ -55,9 +55,12 @@ public class SmartRecyclerView extends FrameLayout {
         return smartRefreshLayout;
     }
 
-
     public FrameLayout getFlRecyContent() {
         return flRecyContent;
+    }
+
+    public SmartRefreshHelper getSmartRefreshHelper() {
+        return smartRefreshHelper;
     }
 
 
@@ -93,7 +96,7 @@ public class SmartRecyclerView extends FrameLayout {
      * 手动调用触发刷新
      */
     public void startRefresh() {
-        smartRefreshHelper.refresh();
+        smartRefreshHelper.refresh(true);
     }
 
     /**

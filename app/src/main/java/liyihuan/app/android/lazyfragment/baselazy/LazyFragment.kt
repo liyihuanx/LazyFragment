@@ -20,12 +20,16 @@ abstract class LazyFragment : Fragment() {
      * 3.fragment的嵌套加载问题
      */
 
-    var rootview: View? = null
-    var isViewCreated = false
-    var currentVisibleStatus = false
-    var isFirstLoad = true
+    private var rootview: View? = null
+    private var isViewCreated = false
+    private var currentVisibleStatus = false
+    private var isFirstLoad = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         rootview = inflater.inflate(getLayoutId(), null)
 
 //        initView(rootview!!)
@@ -98,7 +102,7 @@ abstract class LazyFragment : Fragment() {
     }
 
 
-    private  fun isSupportVisible(): Boolean {
+    private fun isSupportVisible(): Boolean {
         return !currentVisibleStatus // 可见 true  不可见 false
     }
 
@@ -106,7 +110,7 @@ abstract class LazyFragment : Fragment() {
         super.onResume()
         // 跳转Activity回来后，缓存的Fragment会走onResume
         // 如果不是第一次加载就再次加载数据
-        if (!isFirstLoad){
+        if (!isFirstLoad) {
             // isHidden = false, userVisibleHint = true, currentVisibleStatus
             // userVisibleHint && !currentVisibleStatus 不可见--> 可见
             if (!isHidden && userVisibleHint && !currentVisibleStatus) {
@@ -132,7 +136,6 @@ abstract class LazyFragment : Fragment() {
     }
 
 
-
     /**
      * 加载数据
      * 停止加载数据
@@ -140,9 +143,10 @@ abstract class LazyFragment : Fragment() {
      */
     abstract fun onFragmentResume()
     open fun onFragmentPause() {}
-    open fun onFragmentFirstVisible(){}
+    open fun onFragmentFirstVisible() {}
 
     abstract fun getLayoutId(): Int
-//    abstract fun initView(rootView: View)
+
+    //    abstract fun initView(rootView: View)
     abstract fun initView()
 }

@@ -15,22 +15,21 @@ class LazyActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lazy)
         initView()
+    }
 
+    private val fragmentsList by lazy {
+        arrayListOf<Fragment>(
+            LazyHomeFragment(),
+            LazyTwoFragment(),
+            LazyThreeFragment(),
+            LazyFourFragment(),
+            LazyMineFragment()
+        )
     }
 
 
     private fun initView() {
-        val homeFragment = LazyHomeFragment()
-        val twoFragment = LazyTwoFragment()
-        val threeFragment = LazyThreeFragment()
-        val fourFragment = LazyFourFragment()
-        val mineFragment = LazyMineFragment()
-        val fragmentsList = ArrayList<Fragment>()
-        fragmentsList.add(homeFragment)
-        fragmentsList.add(twoFragment)
-        fragmentsList.add(threeFragment)
-        fragmentsList.add(fourFragment)
-        fragmentsList.add(mineFragment)
+
         val viewPagerAdapter =
             HomeViewPagerAdapter(
                 supportFragmentManager,
