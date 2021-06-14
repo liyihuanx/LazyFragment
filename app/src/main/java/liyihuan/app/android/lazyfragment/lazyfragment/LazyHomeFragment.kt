@@ -2,6 +2,7 @@ package liyihuan.app.android.lazyfragment.lazyfragment
 
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -11,7 +12,9 @@ import kotlinx.coroutines.*
 import liyihuan.app.android.lazyfragment.LazyAdapter
 import liyihuan.app.android.lazyfragment.LazyBean
 import liyihuan.app.android.lazyfragment.R
+import liyihuan.app.android.lazyfragment.TopSmoothScroller
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
+import liyihuan.app.android.lazyfragment.manager.LazyManager
 import liyihuan.app.android.lazyfragment.refresh.IEmptyView
 import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
 
@@ -63,7 +66,10 @@ class LazyHomeFragment : LazyRecyclerFragment<LazyBean>() {
             LazyBean("14"),
             LazyBean("15"),
             LazyBean("16"),
-            LazyBean("17")
+            LazyBean("17"),
+            LazyBean("18"),
+            LazyBean("19"),
+            LazyBean("20")
         )
     }
 
@@ -93,4 +99,9 @@ class LazyHomeFragment : LazyRecyclerFragment<LazyBean>() {
         super.onResume()
         Log.d("QWER", "LazyHomeFragment: onResume")
     }
+
+
+    override val getTagName: String
+        get() = "LazyHomeFragment"
+
 }

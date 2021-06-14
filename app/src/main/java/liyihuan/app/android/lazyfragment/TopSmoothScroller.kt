@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 
 class TopSmoothScroller(context: Context?) :  LinearSmoothScroller(context){
     // 使用方法
-//    if (isScrollToTop) {
-//        TopSmoothScroller.get().targetPosition = 0
-//        mSmartRecycler.recyclerView.layoutManager!!.startSmoothScroll(TopSmoothScroller.get())
-//    }
+
 
     companion object {
         fun get() : TopSmoothScroller {

@@ -1,6 +1,7 @@
 package liyihuan.app.android.lazyfragment.lazyfragment
 
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -10,6 +11,7 @@ import liyihuan.app.android.lazyfragment.LazyAdapter
 import liyihuan.app.android.lazyfragment.LazyBean
 import liyihuan.app.android.lazyfragment.R
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
+import liyihuan.app.android.lazyfragment.manager.LazyManager
 import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
 
 /**
@@ -18,7 +20,7 @@ import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
  * @Author: liyihuan
  * @Date: 2021/6/9 23:03
  */
-class LazyMineFragment : LazyRecyclerFragment<LazyBean>(){
+class LazyMineFragment : LazyRecyclerFragment<LazyBean>() {
     override val mSmartRecycler: SmartRecyclerView by lazy {
         smartRecyclerView
     }
@@ -36,7 +38,25 @@ class LazyMineFragment : LazyRecyclerFragment<LazyBean>(){
     }
 
     private val list by lazy {
-        arrayListOf(LazyBean("1"), LazyBean("2"), LazyBean("3"))
+        arrayListOf(
+            LazyBean("LazyMineFragment - 1"),
+            LazyBean("LazyMineFragment - 2"),
+            LazyBean("LazyMineFragment - 3"),
+            LazyBean("LazyMineFragment - 4"),
+            LazyBean("LazyMineFragment - 5"),
+            LazyBean("LazyMineFragment - 6"),
+            LazyBean("LazyMineFragment - 7"),
+            LazyBean("LazyMineFragment - 8"),
+            LazyBean("LazyMineFragment - 9"),
+            LazyBean("LazyMineFragment - 10"),
+            LazyBean("LazyMineFragment - 11"),
+            LazyBean("LazyMineFragment - 12"),
+            LazyBean("LazyMineFragment - 13"),
+            LazyBean("LazyMineFragment - 14"),
+            LazyBean("LazyMineFragment - 15"),
+            LazyBean("LazyMineFragment - 16"),
+            LazyBean("LazyMineFragment - 17")
+        )
     }
 
     private fun loadData() {
@@ -66,4 +86,8 @@ class LazyMineFragment : LazyRecyclerFragment<LazyBean>(){
         super.onResume()
         Log.d("QWER", "LazyMineFragment: onResume")
     }
+
+    override val getTagName: String
+        get() = "LazyMineFragment"
+
 }

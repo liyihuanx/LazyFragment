@@ -156,13 +156,14 @@ open class SmartRefreshHelper<T>(
             refreshEmptyView(NETWORK_ERROR)
             return
         }
-        refresh_layout.autoRefresh()
         // 没有跳出方法，这符合条件可以刷新
         isRefreshing = true
         // 当前页数重置
         currentPage = 0
         // 请求接口请求第一页
         fetcherFuc(0)
+
+        refresh_layout.autoRefresh()
     }
 
     private fun loadCacheData() {
