@@ -66,7 +66,7 @@ open class SmartRefreshHelper<T>(
                 // 页数加一
                 currentPage++
                 adapter.addData(data)
-                refresh_layout.finishLoadMore(true)
+                refresh_layout.finishLoadMore()
 
             } else if (isRefreshing) {
                 adapter.setNewData(data)

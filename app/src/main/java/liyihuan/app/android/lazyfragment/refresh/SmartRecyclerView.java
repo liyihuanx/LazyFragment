@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 
 import java.util.List;
@@ -88,9 +89,14 @@ public class SmartRecyclerView extends FrameLayout {
      *
      * @param refreshHeader
      */
-    public void setReFreshHeader(RefreshHeader refreshHeader) {
+    public void setRefreshHeader(RefreshHeader refreshHeader) {
         smartRefreshLayout.setRefreshHeader(refreshHeader);
     }
+
+    public void setRefreshFooter(RefreshFooter refreshFooter) {
+        smartRefreshLayout.setRefreshFooter(refreshFooter);
+    }
+
 
     /**
      * 手动调用触发刷新

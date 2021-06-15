@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.scwang.smartrefresh.layout.api.RefreshFooter
 import com.scwang.smartrefresh.layout.api.RefreshHeader
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import liyihuan.app.android.lazyfragment.manager.LazyManager
 import liyihuan.app.android.lazyfragment.manager.LazyStatus
@@ -21,7 +23,7 @@ import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
 abstract class LazyRecyclerFragment<T> : LazyFragment() {
 
 
-    val pageSize = 20
+    val halfPageSize = 1
 
     /**
      * 通用emptyView
@@ -32,6 +34,10 @@ abstract class LazyRecyclerFragment<T> : LazyFragment() {
 
     open fun setRefreshHeader(): RefreshHeader {
         return ClassicsHeader(context)
+    }
+
+    open fun setRefreshFooter(): RefreshFooter {
+        return ClassicsFooter(context)
     }
 
     abstract val mSmartRecycler: SmartRecyclerView
@@ -56,7 +62,10 @@ abstract class LazyRecyclerFragment<T> : LazyFragment() {
 
         // 把RecyclerView 和 SmartRefreshHelper 建立联系
         mSmartRecycler.recyclerView.layoutManager = layoutManager
-        mSmartRecycler.setReFreshHeader(setRefreshHeader())
+        mSmartRecycler.setRefreshHeader(setRefreshHeader())
+        mSmartRecycler.setRefreshFooter(setRefreshFooter())
+
+        mSmartRecycler
         mSmartRecycler.setUp(
             adapter,
             getEmptyView(),
@@ -78,7 +87,7 @@ abstract class LazyRecyclerFragment<T> : LazyFragment() {
                     // 获取这个view的下标
                     val position = recyclerView.layoutManager!!.getPosition(view)
                     val status = LazyManager.getStatus(this@LazyRecyclerFragment)
-                    if (position >= pageSize && status.inTop) {
+                    if (position >= halfPageSize && status.inTop) {
                         status.inTop = false
                     }
                 }
