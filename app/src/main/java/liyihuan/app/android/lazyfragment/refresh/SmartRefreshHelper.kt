@@ -48,7 +48,7 @@ open class SmartRefreshHelper<T>(
     init {
         if (isNeedRefresh) {
             refresh_layout.setOnRefreshListener {
-                refresh(false)
+                refresh()
             }
         }
 
@@ -138,17 +138,17 @@ open class SmartRefreshHelper<T>(
     /**
      * 刷新数据
      */
-    fun refresh(isNeedCache: Boolean = true) {
+    fun refresh() {
         // 如果在刷新 或者 在加载
         if (isRefreshing || isLoadMoreing) {
             return
         }
         // 判断缓存
-        if (hasCache && isNeedCache) {
-            // 加载缓存数据
-            loadCacheData()
-            return
-        }
+//        if (hasCache && isNeedCache) {
+//            // 加载缓存数据
+//            loadCacheData()
+//            return
+//        }
 
         // 判断网络
         val connectedStatus = NetUtil.isNetworkAvailable(recycler_view.context)
@@ -164,6 +164,11 @@ open class SmartRefreshHelper<T>(
         fetcherFuc(0)
 
         refresh_layout.autoRefresh()
+    }
+
+    fun fakeRefresh() {
+        refresh_layout.autoRefresh()
+        pauseRefresh()
     }
 
     private fun loadCacheData() {

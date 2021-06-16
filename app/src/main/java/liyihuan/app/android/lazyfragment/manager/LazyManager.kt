@@ -1,13 +1,10 @@
 package liyihuan.app.android.lazyfragment.manager
 
 import androidx.fragment.app.Fragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import liyihuan.app.android.lazyfragment.TopSmoothScroller
+import liyihuan.app.android.lazyfragment.baselazy.BaseLazyFragment
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
 import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
-import liyihuan.app.android.lazyfragment.refresh.SmartRefreshHelper
 
 /**
  * @ClassName: RegisterFragment
@@ -35,7 +32,7 @@ object LazyManager {
      */
     @JvmStatic
     fun register(tag: String, fragment: Fragment, lazyStatus: LazyStatus? = null) {
-        if (fragment is LazyRecyclerFragment<*>) {
+        if (fragment is BaseLazyFragment) {
             if (!fragmentMap.containsValue(fragment)) {
                 fragmentMap[tag] = fragment
             }
@@ -80,7 +77,7 @@ object LazyManager {
         smartRecycler.recyclerView.layoutManager!!.startSmoothScroll(TopSmoothScroller.get())
         status.inTop = true
         status.clickTime = System.currentTimeMillis()
-        smartRecycler.smartRefreshHelper.refresh(false)
+        smartRecycler.smartRefreshHelper.fakeRefresh()
     }
 
 

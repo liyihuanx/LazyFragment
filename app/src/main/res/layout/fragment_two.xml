@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
-        android:id="@+id/smartRecyclerView"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpTwo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

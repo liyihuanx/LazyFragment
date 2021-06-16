@@ -102,7 +102,7 @@ public class SmartRecyclerView extends FrameLayout {
      * 手动调用触发刷新
      */
     public void startRefresh() {
-        smartRefreshHelper.refresh(true);
+        smartRefreshHelper.refresh();
     }
 
     /**

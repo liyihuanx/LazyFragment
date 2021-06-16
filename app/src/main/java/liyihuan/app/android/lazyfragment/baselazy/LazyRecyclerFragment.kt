@@ -1,7 +1,5 @@
 package liyihuan.app.android.lazyfragment.baselazy
 
-import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smartrefresh.layout.api.RefreshFooter
@@ -9,7 +7,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import liyihuan.app.android.lazyfragment.manager.LazyManager
-import liyihuan.app.android.lazyfragment.manager.LazyStatus
 import liyihuan.app.android.lazyfragment.refresh.CommonEmptyView
 import liyihuan.app.android.lazyfragment.refresh.IEmptyView
 import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
@@ -20,7 +17,7 @@ import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
  * @Author: liyihuan
  * @Date: 2021/6/8 21:16
  */
-abstract class LazyRecyclerFragment<T> : LazyFragment() {
+abstract class LazyRecyclerFragment<T> : BaseLazyFragment() {
 
 
     val halfPageSize = 1
