@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
  * @Author: liyihuan
  * @Date: 2021/3/23 22:44
  */
-abstract class LazyFragment : Fragment() {
+abstract class BaseLazyFragment : Fragment() {
 
     /**
      * 1.第一次加载，不加载当前界面的数据
@@ -94,9 +94,9 @@ abstract class LazyFragment : Fragment() {
      * 所以刚好和currentVisibleStatus相反
      */
     private fun isParentVisible(): Boolean {
-        if (parentFragment is LazyFragment) {
+        if (parentFragment is BaseLazyFragment) {
 
-            return (parentFragment as LazyFragment).isSupportVisible()
+            return (parentFragment as BaseLazyFragment).isSupportVisible()
         }
         return false
     }
@@ -129,7 +129,7 @@ abstract class LazyFragment : Fragment() {
     private fun dispatchChild(visible: Boolean) {
         val fragments = childFragmentManager.fragments //  List<Fragment>
         fragments.forEach {
-            if (it is LazyFragment && !it.isHidden && it.userVisibleHint) {
+            if (it is BaseLazyFragment && !it.isHidden && it.userVisibleHint) {
                 it.dispatchVisible(visible)
             }
         }
