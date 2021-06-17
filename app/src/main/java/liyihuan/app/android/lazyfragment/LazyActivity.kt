@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_lazy.*
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
 import liyihuan.app.android.lazyfragment.fragment.*
 import liyihuan.app.android.lazyfragment.lazyfragment.*
-import liyihuan.app.android.lazyfragment.manager.LazyManager
 import java.util.*
 
 class LazyActivity : AppCompatActivity(), View.OnClickListener {
@@ -66,8 +65,8 @@ class LazyActivity : AppCompatActivity(), View.OnClickListener {
             override fun onPageSelected(position: Int) {
                 clearTabStatus()
                 selectTab(position)
+                currentIndex = position
             }
-
         })
     }
 
@@ -91,28 +90,41 @@ class LazyActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     *  vp_lazy.currentItem = position，position一样的话只会调用一次onPageSelected
+     *  第一次点击currentIndex != position
+     *  第二次点击currentIndex == position
+     */
     private fun tabClickEvent(position: Int) {
-        val status = LazyManager.getStatus(fragmentsList[position])
-
-
-        // 1.在当前页面，并且不是在顶部，滑动到顶部并且刷新
-        if ((currentIndex == position && !status.inTop)) {
-            LazyManager.smoothScrollToTop(fragmentsList[position] as LazyRecyclerFragment<*>)
-        } else {
-            // 2.切换页面，距离上一次点击这个页面的时间大于 xxxx
-            vp_lazy.currentItem = position
-            val currentTimeMillis = System.currentTimeMillis()
-            val clickTime = currentTimeMillis - status.clickTime
-
-            // 第一次点击
-            if (status.clickTime == 0L) {
-                status.clickTime = System.currentTimeMillis()
-            } else {
-                if (status.clickTime != 0L && clickTime >= 60 * 60 * 1000) {
-                    LazyManager.smoothScrollToTop(fragmentsList[position] as LazyRecyclerFragment<*>)
-                }
+        if (fragmentsList[position] is LazyRecyclerFragment<*>) {
+            val lazyRecyclerFragment = fragmentsList[position] as LazyRecyclerFragment<*>
+            if (currentIndex == position) {
+                lazyRecyclerFragment.doubleClickRefresh()
             }
         }
+        // 一定放在后面
+        vp_lazy.currentItem = position
+//        val status = fragmentsList[position].getS
+//
+//
+//        // 1.在当前页面，并且不是在顶部，滑动到顶部并且刷新
+//        if ((currentIndex == position && !status.inTop)) {
+//            LazyManager.smoothScrollToTop(fragmentsList[position] as LazyRecyclerFragment<*>)
+//        } else {
+//            // 2.切换页面，距离上一次点击这个页面的时间大于 xxxx
+//            vp_lazy.currentItem = position
+//            val currentTimeMillis = System.currentTimeMillis()
+//            val clickTime = currentTimeMillis - status.clickTime
+//
+//            // 第一次点击
+//            if (status.clickTime == 0L) {
+//                status.clickTime = System.currentTimeMillis()
+//            } else {
+//                if (status.clickTime != 0L && clickTime >= 60 * 60 * 1000) {
+//                    LazyManager.smoothScrollToTop(fragmentsList[position] as LazyRecyclerFragment<*>)
+//                }
+//            }
+//        }
     }
 
 
@@ -130,7 +142,6 @@ class LazyActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun selectTab(position: Int) {
-        currentIndex = position
         when (position) {
             0 -> {
                 iv_tab_home.setImageResource(R.mipmap.tab_icon_lesson_selected)

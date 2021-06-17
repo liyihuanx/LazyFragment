@@ -9,5 +9,5 @@ package liyihuan.app.android.lazyfragment.manager
 class LazyStatus {
     var needCache: Boolean = true
     var inTop: Boolean = true
-    var clickTime = 0L
+    var clickDefTime = 0L
 }

@@ -66,15 +66,7 @@ class LazyHomeOneFragment : LazyRecyclerFragment<LazyBean>() {
         }
     }
 
-    override fun onFragmentPause() {
-        super.onFragmentPause()
-        Log.d("QWER", "LazyHomeOneFragment: 停止加载")
-    }
 
-    override fun onFragmentResume() {
-        super.onFragmentResume()
-        Log.d("QWER", "LazyHomeOneFragment: 加载数据")
-    }
 
 
     override val getTagName: String

@@ -11,7 +11,7 @@ import liyihuan.app.android.lazyfragment.LazyAdapter
 import liyihuan.app.android.lazyfragment.LazyBean
 import liyihuan.app.android.lazyfragment.R
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
-import liyihuan.app.android.lazyfragment.manager.LazyManager
+
 import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
 
 /**
@@ -72,15 +72,7 @@ class LazyThreeFragment : LazyRecyclerFragment<LazyBean>(){
         return R.layout.fragment_three
     }
 
-    override fun onFragmentPause() {
-        super.onFragmentPause()
-        Log.d("QWER", "LazyThreeFragment: 停止加载")
-    }
 
-    override fun onFragmentResume() {
-        super.onFragmentResume()
-        Log.d("QWER", "LazyThreeFragment: 加载数据")
-    }
 
     override val getTagName: String
         get() = "LazyThreeFragment"

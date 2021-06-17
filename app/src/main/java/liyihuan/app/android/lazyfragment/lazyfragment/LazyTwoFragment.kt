@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.fragment_two.*
 import liyihuan.app.android.lazyfragment.R
 import liyihuan.app.android.lazyfragment.baselazy.BaseLazyFragment
 import liyihuan.app.android.lazyfragment.fragment.HomeViewPagerAdapter
-import liyihuan.app.android.lazyfragment.manager.LazyManager
+
 import java.util.*
 
 /**
@@ -24,16 +24,12 @@ class LazyTwoFragment : BaseLazyFragment() {
     }
 
     override fun initView() {
-
         fragmentsList = ArrayList()
         fragmentsList.add(LazyHomeOneFragment())
         fragmentsList.add(LazyHomeTwoFragment())
 
         homeViewPagerAdapter = HomeViewPagerAdapter(childFragmentManager, fragmentsList)
         vpTwo.adapter = homeViewPagerAdapter
-
-        LazyManager.register("LazyTwoFragment",this)
-
     }
 
     override fun onFragmentPause() {
@@ -44,6 +40,5 @@ class LazyTwoFragment : BaseLazyFragment() {
     override fun onFragmentResume() {
         Log.d("QWER", "LazyTwoFragment: 加载数据")
     }
-
 
 }

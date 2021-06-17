@@ -11,7 +11,7 @@ import liyihuan.app.android.lazyfragment.LazyAdapter
 import liyihuan.app.android.lazyfragment.LazyBean
 import liyihuan.app.android.lazyfragment.R
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
-import liyihuan.app.android.lazyfragment.manager.LazyManager
+
 import liyihuan.app.android.lazyfragment.refresh.SmartRecyclerView
 
 /**
@@ -72,20 +72,8 @@ class LazyMineFragment : LazyRecyclerFragment<LazyBean>() {
         return R.layout.fragment_mine
     }
 
-    override fun onFragmentPause() {
-        super.onFragmentPause()
-        Log.d("QWER", "LazyMineFragment: 停止加载")
-    }
 
-    override fun onFragmentResume() {
-        super.onFragmentResume()
-        Log.d("QWER", "LazyMineFragment: 加载数据")
-    }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d("QWER", "LazyMineFragment: onResume")
-    }
 
     override val getTagName: String
         get() = "LazyMineFragment"

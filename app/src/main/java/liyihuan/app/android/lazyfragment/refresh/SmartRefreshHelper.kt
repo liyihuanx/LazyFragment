@@ -70,12 +70,11 @@ open class SmartRefreshHelper<T>(
 
             } else if (isRefreshing) {
                 adapter.setNewData(data)
-                /** 假装有缓存数据 **/
-                cacheData.clear()
-                cacheData.addAll(data)
-                hasCache = true
-                /** 假装有缓存数据 **/
-
+//                /** 假装有缓存数据 **/
+//                cacheData.clear()
+//                cacheData.addAll(data)
+//                hasCache = true
+//                /** 假装有缓存数据 **/
                 refresh_layout.finishRefresh()
             }
 
@@ -88,26 +87,6 @@ open class SmartRefreshHelper<T>(
             } else {
                 refresh_layout.finishLoadMore(false)
             }
-        }
-        isLoadMoreing = false
-        isRefreshing = false
-    }
-
-
-    /**
-     * 加载数据失败
-     */
-    fun onFetchDataError() {
-        if (isRefreshing) {
-            refresh_layout.finishRefresh(false)
-        } else {
-            adapter.loadMoreFail()
-        }
-        val disconnected = !NetUtil.isNetworkAvailable(recycler_view.context)
-        if (disconnected) {
-            refreshEmptyView(NETWORK_ERROR)
-        } else {
-            refreshEmptyView(NODATA)
         }
         isLoadMoreing = false
         isRefreshing = false
@@ -166,10 +145,10 @@ open class SmartRefreshHelper<T>(
         refresh_layout.autoRefresh()
     }
 
-    fun fakeRefresh() {
-        refresh_layout.autoRefresh()
-        pauseRefresh()
-    }
+//    fun fakeRefresh() {
+//        refresh_layout.autoRefresh()
+//        pauseRefresh()
+//    }
 
     private fun loadCacheData() {
         Log.d("QWER", "loadCacheData: ")
