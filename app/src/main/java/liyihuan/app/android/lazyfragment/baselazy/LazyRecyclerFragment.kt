@@ -125,7 +125,7 @@ abstract class LazyRecyclerFragment<T> : BaseLazyFragment() {
         } else {
             val currentTimeMillis = System.currentTimeMillis()
             lazyStatus.clickDefTime = currentTimeMillis - lazyStatus.clickDefTime
-            if (lazyStatus.clickDefTime != 0L && lazyStatus.clickDefTime >= 5000) {
+            if (lazyStatus.clickDefTime != 0L && lazyStatus.clickDefTime >= 60 * 60 * 1000) {
                 Log.d("QWER", "$getTagName : 距离上一次切到该Fragment时间比较久 - 加载数据")
                 smoothScrollToTop()
             } else {
