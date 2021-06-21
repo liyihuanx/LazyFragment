@@ -44,7 +44,6 @@ abstract class LazyRecyclerFragment<T> : BaseLazyFragment() {
 
     abstract val mSmartRecycler: SmartRecyclerView
 
-
     abstract val adapter: BaseQuickAdapter<T, *>
 
     abstract val layoutManager: RecyclerView.LayoutManager
@@ -55,6 +54,8 @@ abstract class LazyRecyclerFragment<T> : BaseLazyFragment() {
     abstract val fetcherFuc: ((page: Int) -> Unit)
 
     abstract val getTagName: String
+
+    open var refreshTime = 60 * 60 * 1000L
 
 
     override fun initView() {
@@ -116,16 +117,18 @@ abstract class LazyRecyclerFragment<T> : BaseLazyFragment() {
      *   1. 第一次打开该Fragment
      *   2. 距离上一次切到该Fragment时间比较久
      *   3. 连续点击两次该Fragment
+     *   4. 从另一个activity回来
      */
     override fun onFragmentResume() {
-        if (lazyStatus.clickDefTime == 0L) {
+        if (lazyStatus.clickTime == 0L) {
             Log.d("QWER", "$getTagName : 第一次打开该Fragment - 加载数据")
             mSmartRecycler.startRefresh()
-            lazyStatus.clickDefTime = System.currentTimeMillis()
+            lazyStatus.clickTime = System.currentTimeMillis()
         } else {
             val currentTimeMillis = System.currentTimeMillis()
-            lazyStatus.clickDefTime = currentTimeMillis - lazyStatus.clickDefTime
-            if (lazyStatus.clickDefTime != 0L && lazyStatus.clickDefTime >= 60 * 60 * 1000) {
+            val defTime = currentTimeMillis - lazyStatus.clickTime
+            lazyStatus.clickTime = currentTimeMillis
+            if (lazyStatus.clickTime != 0L && defTime >= refreshTime) {
                 Log.d("QWER", "$getTagName : 距离上一次切到该Fragment时间比较久 - 加载数据")
                 smoothScrollToTop()
             } else {

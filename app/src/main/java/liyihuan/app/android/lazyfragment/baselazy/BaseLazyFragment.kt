@@ -1,6 +1,7 @@
 package liyihuan.app.android.lazyfragment.baselazy
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,13 @@ abstract class BaseLazyFragment : Fragment() {
      * 3.fragment的嵌套加载问题
      */
 
+    // 根布局
     private var rootview: View? = null
+    // 布局是否初始化
     private var isViewCreated = false
+    // 记录Fragment的可见状态
     private var currentVisibleStatus = false
+    // 是否第一次加载
     private var isFirstLoad = true
 
     override fun onCreateView(
@@ -49,6 +54,12 @@ abstract class BaseLazyFragment : Fragment() {
     }
 
 
+    /**
+     *   1.可见--> 不可见
+     *   2.不可见--> 可见
+     *   isVisibleToUser
+     *   currentVisibleStatus 判断当前的状态
+     */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         // 在界面初始化好后才开始分发可见状态加载数据
@@ -65,6 +76,9 @@ abstract class BaseLazyFragment : Fragment() {
 
     }
 
+    /**
+     * 分发可见事件，加载数据
+     */
     private fun dispatchVisible(isVisible: Boolean) {
         currentVisibleStatus = isVisible
 
@@ -95,7 +109,6 @@ abstract class BaseLazyFragment : Fragment() {
      */
     private fun isParentVisible(): Boolean {
         if (parentFragment is BaseLazyFragment) {
-
             return (parentFragment as BaseLazyFragment).isSupportVisible()
         }
         return false
@@ -120,10 +133,17 @@ abstract class BaseLazyFragment : Fragment() {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        // 表示已经跳转到其他Activity去了
+        if (currentVisibleStatus) {
+            currentVisibleStatus = false
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         isViewCreated = false
-        currentVisibleStatus = false
     }
 
     private fun dispatchChild(visible: Boolean) {

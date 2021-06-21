@@ -1,5 +1,6 @@
 package liyihuan.app.android.lazyfragment.lazyfragment
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,10 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smartrefresh.layout.api.RefreshHeader
 import kotlinx.android.synthetic.main.fragment_lazy_home.*
 import kotlinx.coroutines.*
-import liyihuan.app.android.lazyfragment.LazyAdapter
-import liyihuan.app.android.lazyfragment.LazyBean
-import liyihuan.app.android.lazyfragment.R
-import liyihuan.app.android.lazyfragment.TopSmoothScroller
+import liyihuan.app.android.lazyfragment.*
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
 
 import liyihuan.app.android.lazyfragment.refresh.IEmptyView
@@ -37,7 +35,12 @@ class LazyHomeFragment : LazyRecyclerFragment<LazyBean>() {
     }
 
     override val adapter: BaseQuickAdapter<LazyBean, *> by lazy {
-        LazyAdapter()
+        LazyAdapter().apply {
+            setOnItemClickListener { adapter, view, position ->
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     override val layoutManager: RecyclerView.LayoutManager by lazy {

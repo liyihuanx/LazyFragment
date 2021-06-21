@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_lazy.*
+import liyihuan.app.android.lazyfragment.bad.*
 import liyihuan.app.android.lazyfragment.baselazy.LazyRecyclerFragment
 import liyihuan.app.android.lazyfragment.fragment.*
 import liyihuan.app.android.lazyfragment.lazyfragment.*
@@ -24,11 +25,16 @@ class LazyActivity : AppCompatActivity(), View.OnClickListener {
 
     private val fragmentsList by lazy {
         arrayListOf<Fragment>(
-            LazyHomeFragment(),
-            LazyTwoFragment(),
-            LazyThreeFragment(),
-            LazyFourFragment(),
-            LazyMineFragment()
+            BadHomeFragment(),
+            BadTwoFragment(),
+            BadThreeFragment(),
+            BadFourFragment(),
+            BadMineFragment()
+//            LazyHomeFragment(),
+//            LazyTwoFragment(),
+//            LazyThreeFragment(),
+//            LazyFourFragment(),
+//            LazyMineFragment()
         )
     }
 
